@@ -44,7 +44,12 @@ if uploaded_file is not None:
 
     if st.button(
         label="生成伴奏: {}".format(level_str), disabled=True if level == 0 else False):
-            status = os.system("ffmpeg -i '{}' -filter_complex 'asetrate={}*2^({}/12),atempo=1/2^({}/12)' {}".format(
-            source_path, frame_rate, level, level, output_path))
-            st.text(status)
-            st.audio(output_path)
+            with st.spinner('变调中, 请稍等...'):
+                status = os.system("ffmpeg -i '{}' -filter_complex 'asetrate={}*2^({}/12),atempo=1/2^({}/12)' {}".format(
+                source_path, frame_rate, level, level, output_path))
+                
+                if status == 0:
+                    st.balloons()
+
+                    st.text("变调:")
+                    st.audio(output_path)
