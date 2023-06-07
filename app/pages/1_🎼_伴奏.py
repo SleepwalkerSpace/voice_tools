@@ -43,12 +43,8 @@ if uploaded_file is not None:
     output_path = os.path.join(project_static_path, "{}{}{}".format(fn, level_str, ext))
 
     if st.button(
-        label = "生成伴奏: {}".format(level_str),
-        type="primary", 
-        disabled = True if level == 0 else False):
-            
+        label="生成伴奏: {}".format(level_str), disabled=True if level == 0 else False):
             status = os.system("ffmpeg -i '{}' -filter_complex 'asetrate={}*2^({}/12),atempo=1/2^({}/12)' {}".format(
             source_path, frame_rate, level, level, output_path))
             st.text(status)
-
             st.audio(output_path)
