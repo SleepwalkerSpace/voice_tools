@@ -1,0 +1,4 @@
+[server]
+port = 5000
+enableStaticServing = true
+maxUploadSize = 24
