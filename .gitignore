@@ -153,3 +153,4 @@ cython_debug/
 
 # configure file
 app/.streamlit/config.toml
+*.mp3

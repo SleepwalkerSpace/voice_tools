@@ -7,12 +7,12 @@ project_path = os.getcwd()
 project_static_path = os.path.join(project_path, "static")
 
 st.set_page_config(
-    page_title="伴奏",
+    page_title="升降伴奏",
     page_icon="🎼"
 )
 
 uploaded_file = st.file_uploader(
-    label = "升降伴奏",
+    label = "升降伴奏(目前仅限于MP3格式)",
     type = ["MP3"],
     help = "提交需要升降音阶的伴奏MP3文件."
     )
@@ -23,7 +23,6 @@ if uploaded_file is not None:
         f.write(uploaded_file.getvalue())
         f.close()
     
-    st.text("存放路径: {}".format(source_path))
     frame_rate = AudioSegment.from_mp3(source_path).frame_rate
     st.text("伴奏赫兹: {}".format(frame_rate))
 
@@ -45,9 +44,13 @@ if uploaded_file is not None:
     if st.button(
         label="生成伴奏: {}".format(level_str), disabled=True if level == 0 else False):
             with st.spinner('变调中, 请稍等...'):
-                status = os.system("ffmpeg -i '{}' -filter_complex 'asetrate={}*2^({}/12),atempo=1/2^({}/12)' {}".format(
-                source_path, frame_rate, level, level, output_path))
+                cmd = 'ffmpeg -i {} -filter_complex "asetrate={}*2^({}/12),atempo=1/2^({}/12)" {}'.format(
+                source_path, frame_rate, level, level, output_path)
+                st.text(cmd)
+                status = os.system(cmd)
 
                 if status == 0:
                     st.text("变调:")
                     st.audio(output_path)
+                else:
+                     st.text("变调失败")
