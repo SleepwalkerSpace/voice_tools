@@ -28,9 +28,8 @@ if uploaded_file is not None:
     st.text("原调:")
     st.audio(data=uploaded_file, format="audio/mp3", start_time=0)
 
-    level = st.slider(
-    '调整音阶:',
-    -12, 12, 0)
+    level_disabled = False
+    level = st.slider('调整音阶:', -12, 12, 0)
     level_str = ""
     if level < 0:
           level_str = str(level)
@@ -45,7 +44,7 @@ if uploaded_file is not None:
     
     if st.button(
         label="生成伴奏: {}".format(level_str), disabled=True if level == 0 else False):
-            with st.spinner('变调中, 请稍等...'):
+            with st.spinner('变调中, 请勿刷新页面...'):
                 cmd = 'ffmpeg -i {} -filter_complex "asetrate={}*2^({}/12),atempo=1/2^({}/12)" {}'.format(
                 source_path, frame_rate, level, level, output_path)
                 status = os.system(cmd)
