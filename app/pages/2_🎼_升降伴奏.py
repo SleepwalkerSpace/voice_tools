@@ -37,8 +37,9 @@ if uploaded_file is not None:
     else:
           level_str = "+"+str(level)
 
-    fn, ext = os.path.splitext(uploaded_file.name)
-    output_path = os.path.join(project_static_path, "{}{}{}".format(fn, level_str, ext))
+    source_fn, ext = os.path.splitext(uploaded_file.name)
+    output_fn = "{}{}{}".format(source_fn, level_str, ext)
+    output_path = os.path.join(project_static_path, output_fn)
     if os.path.isfile(output_path):
         os.remove(output_path)
     
@@ -52,7 +53,15 @@ if uploaded_file is not None:
                 if status == 0:
                     st.text("变调:")
                     st.audio(data=output_path, format="audio/mp3", start_time=0)
-                    
+
+                    with open(output_path, "rb") as file:
+                        st.download_button(
+                            label = "下载变调伴奏",
+                            data = file,
+                            file_name = output_fn,
+                            mime = "audio/mp3"
+                        )
+
                 else:
                      st.text("变调失败")
 
