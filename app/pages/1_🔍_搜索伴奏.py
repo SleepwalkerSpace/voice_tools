@@ -35,12 +35,24 @@ def crawl(url:str):
     return src
 
 search_keyword = st.text_input("关键字:")
-search_btn = st.button(label="搜索", disabled=False if search_keyword else True)
+search_btn = st.button(label="搜索", disabled=False if search_keyword else True,use_container_width= True)
 if search_btn:
     with st.spinner('搜索中, 请勿刷新页面...'):
         search_result = search(search_keyword)
-        for item in search_result["list"]:
+        if search_result:
+            st.success("搜索完成!")
+        else:
+            st.error("搜索失败!")
+
+    with st.spinner('解析中, 请勿刷新页面...'):
+        search_result_length = len(search_result["list"])
+        step = int(100 / search_result_length)
+        progress_bar = st.progress(0, text="总计{}".format(search_result_length))
+        for i, item in enumerate(search_result["list"]):
             url = crawl(item["songurl"])
             if url:
                 st.text(item["originSinger"])
                 st.audio(data=url, format="audio/mp3", start_time=0)
+                current_progress = 100 if i == search_result_length - 1 else  i * step + step
+                progress_bar.progress(current_progress, text="进度: {}/{}".format(i+1, search_result_length))
+        st.success("解析完成!")
