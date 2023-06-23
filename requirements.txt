@@ -1,2 +1,6 @@
 streamlit
 pydub
+requests
+selenium
+BeautifulSoup4
+lxml
