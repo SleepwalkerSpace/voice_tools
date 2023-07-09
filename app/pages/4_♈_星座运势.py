@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 
+st.set_page_config(
+    page_title="星座运势",
+    page_icon="♈"
+)
 
 constellations = [
     "♈白羊座[03/21-04/20]",

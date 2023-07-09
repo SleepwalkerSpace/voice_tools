@@ -35,7 +35,7 @@ def crawl(url:str):
     return src
 
 search_keyword = st.text_input("关键字:")
-search_btn = st.button(label="搜索", disabled=False if search_keyword else True,use_container_width= True)
+search_btn = st.button(label="搜索", disabled=False if search_keyword else True, use_container_width= True)
 if search_btn:
     with st.spinner('搜索中, 请勿刷新页面...'):
         search_result = search(search_keyword)
@@ -49,6 +49,7 @@ if search_btn:
         step = int(100 / search_result_length)
         progress_bar = st.progress(0, text="总计{}".format(search_result_length))
         for i, item in enumerate(search_result["list"]):
+            st.write(item["originSinger"], item["songurl"])
             url = crawl(item["songurl"])
             if url:
                 st.text(item["originSinger"])
