@@ -57,3 +57,8 @@ if search_btn:
                 current_progress = 100 if i == search_result_length - 1 else  i * step + step
                 progress_bar.progress(current_progress, text="进度: {}/{}".format(i+1, search_result_length))
         st.success("解析完成!")
+
+# crawl_url = st.text_input("5SingURL")
+# if st.button("creaw"):
+#     url = crawl(crawl_url)
+#     st.audio(data=url, format="audio/mp3", start_time=0)
