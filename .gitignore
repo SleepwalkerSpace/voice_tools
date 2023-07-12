@@ -119,6 +119,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+spleeter_venv/
 
 # Spyder project settings
 .spyderproject
@@ -154,3 +155,5 @@ cython_debug/
 # configure file
 app/.streamlit/config.toml
 *.mp3
+
+pretrained_models/
