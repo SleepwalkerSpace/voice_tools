@@ -1,4 +1,4 @@
 [server]
 port = 80
 enableStaticServing = true
-maxUploadSize = 36
+maxUploadSize = 96
